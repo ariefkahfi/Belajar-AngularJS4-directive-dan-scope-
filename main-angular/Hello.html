@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World Angular JS Directives</title>
+</head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<body ng-app="mainApp">
+
+
+        <div ng-controller="control1">
+           Nama : <input type="text" ng-model="nama"/> <br/>
+           <span ng-bind=" 'Nama anda : ' + nama"></span> <br/>
+
+
+           <input type="submit" id="submit"  value="Submit Data"/>
+
+
+           <div id="div-child" ng-model="result"></div>
+        </div>
+
+
+        <span style="color : {{color}}; "> Hello RootScope Color</span><br/>
+
+
+        <div ng-controller="controller2">
+            <ul>
+                <li ng-repeat="n in arr">
+                    <span ng-bind="{{n}}"></span>
+                </li>
+            </ul>
+        </div>
+
+        <span style="color : {{color}}; ">Hello RootScope Color</span><br/>
+
+        <div ng-controller="scope-controller" style="color: {{color}};">
+            Hello Scope Controller Color
+        </div>
+
+</body>
+
+    <script>
+        var mainApp = angular.module('mainApp',[]);
+
+        mainApp.run(function($rootScope){
+           $rootScope.color = '#7FF000';
+        });
+
+        mainApp.controller('scope-controller',function($scope){
+           $scope.color = 'crimson';
+        });
+
+        mainApp.controller('controller2',function($scope){
+           $scope.arr = [2,1,4];
+        });
+
+
+
+        mainApp.controller('control1',function($scope){
+
+            $scope.nama = '';
+
+            angular.element(document.querySelector('#submit')).on('click',function(){
+               if($scope.nama === ''){
+                 alert('Kosong');
+                   angular.element(document.querySelector('#div-child')).text('');
+               }else{
+                   //var textField = angular.element(document.querySelector('input[type=text]')).val();
+
+                   //alert(textField);
+
+                   angular.element(document.querySelector('#div-child')).text($scope.nama);
+               }
+           });
+        });
+
+    </script>
+
+</html>
